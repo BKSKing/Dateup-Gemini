@@ -1,12 +1,19 @@
 "use client";
+
 import { useState } from "react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createBrowserClient } from "@supabase/ssr"; // Updated import
 import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const supabase = createClientComponentClient();
+
+  // Initialized with Environment Variables
+  const supabase = createBrowserClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+  );
+
   const router = useRouter();
 
   const handleLogin = async () => {
@@ -15,7 +22,7 @@ export default function LoginPage() {
       password,
     });
     if (error) alert(error.message);
-    else router.push("/admin/dashboard"); // Login ke baad seedha dashboard
+    else router.push("/admin/dashboard");
   };
 
   return (
