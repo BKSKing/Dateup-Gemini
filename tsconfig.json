@@ -18,8 +18,9 @@
         "name": "next"
       }
     ],
+    "baseUrl": ".", // Ye line add karein
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./src/*"] // Isko aise change karein
     }
   },
   "include": [
@@ -32,3 +33,4 @@
   ],
   "exclude": ["node_modules"]
 }
+
