@@ -1,18 +1,7 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-:root {
-  /* Professional Navy & Slate Palette */
-  --background: #020617; /* Deep Navy */
-  --foreground: #f1f5f9; /* Soft White */
-  --accent-orange: #f59e0b; /* Professional Orange */
-}
-
 body {
-  background-color: var(--background);
-  color: var(--foreground);
-  /* System fonts for professional look */
+  margin: 0;
+  background: #000000;
+  color: white;
   font-family:
     "Inter",
     -apple-system,
@@ -20,36 +9,4 @@ body {
     "Segoe UI",
     Roboto,
     sans-serif;
-  font-feature-settings: "cv11", "ss01", "ss03";
-  -webkit-font-smoothing: antialiased;
-}
-
-/* Professional Card Styling */
-.glass-card {
-  background: rgba(15, 23, 42, 0.8); /* Slate Navy */
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(51, 65, 85, 0.5); /* Subtle Slate Border */
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-}
-
-/* Refined Animation */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-.animate-professional-in {
-  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-/* Focus states for inputs */
-input:focus {
-  border-color: var(--accent-orange) !important;
-  box-shadow: 0 0 0 1px var(--accent-orange);
 }

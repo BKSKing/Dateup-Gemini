@@ -1,6 +1,5 @@
 "use client";
 
-import "./globals.css";
 import { useState } from "react";
 import { createBrowserClient } from "@supabase/ssr";
 import { useRouter } from "next/navigation";
@@ -41,29 +40,26 @@ export default function ViewerLogin() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#020617] via-[#0B1120] to-black px-6 relative overflow-hidden">
-      {/* Orange Glow Effect */}
-      <div className="absolute -top-32 -right-32 w-[400px] h-[400px] bg-orange-600/20 blur-[140px] rounded-full"></div>
-      <div className="absolute bottom-0 left-0 w-[350px] h-[350px] bg-blue-900/20 blur-[120px] rounded-full"></div>
-
+    // Rule 3: Background Always Page Container Pe
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-[#0a0f1f] to-[#ff7a00] px-6">
       <div className="relative w-full max-w-md">
         {/* Branding */}
-        <div className="text-center mb-12">
-          <h1 className="text-6xl font-extrabold tracking-tight">
+        <div className="text-center mb-10">
+          <h1 className="text-6xl font-extrabold tracking-tighter">
             <span className="text-white">DATE</span>
             <span className="text-orange-500">UP</span>
           </h1>
-          <p className="text-slate-400 text-xs uppercase tracking-[0.4em] mt-2">
+          <p className="text-orange-500/60 text-[10px] uppercase tracking-[0.5em] mt-3 font-medium">
             Smart Digital Notice System
           </p>
         </div>
 
-        {/* Glass Card */}
-        <div className="bg-[#0F172A]/80 backdrop-blur-xl border border-slate-800 p-10 rounded-3xl shadow-[0_0_40px_rgba(255,115,0,0.15)]">
+        {/* Rule 4: Card Polish Tailwind Se */}
+        <div className="bg-[#0f172a]/90 backdrop-blur-xl border border-orange-500/20 p-10 rounded-3xl shadow-2xl">
           <form onSubmit={handleJoin} className="space-y-8">
-            {/* Input Section */}
+            {/* Rule 5: Input Proper Polish */}
             <div>
-              <label className="block text-xs text-slate-400 uppercase tracking-widest mb-3">
+              <label className="block text-[10px] text-slate-400 uppercase tracking-[0.2em] mb-3 ml-1">
                 Student Access ID
               </label>
               <input
@@ -72,41 +68,44 @@ export default function ViewerLogin() {
                 value={accessId}
                 onChange={(e) => setAccessId(e.target.value)}
                 required
-                className="w-full bg-black border border-slate-700 p-4 rounded-2xl text-white text-lg tracking-widest uppercase outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/30 transition-all"
+                className="w-full bg-[#0a0f1f] border border-slate-700 p-4 rounded-2xl text-white outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/30 transition-all uppercase tracking-widest placeholder:text-slate-600"
               />
             </div>
 
-            {/* Button */}
             <button
               disabled={loading}
-              className="w-full py-4 bg-orange-600 hover:bg-orange-500 text-black font-bold rounded-2xl transition-all duration-300 active:scale-95 shadow-lg shadow-orange-900/30 uppercase tracking-wider"
+              className="w-full py-4 bg-orange-600 hover:bg-orange-500 text-black font-black rounded-2xl transition-all duration-300 active:scale-95 shadow-lg shadow-orange-600/20 uppercase tracking-widest text-sm"
             >
               {loading ? "Verifying..." : "Access Notices"}
             </button>
           </form>
 
           {/* Divider */}
-          <div className="flex items-center gap-4 my-10">
-            <div className="flex-1 h-px bg-slate-800"></div>
-            <span className="text-slate-600 text-[10px] uppercase tracking-widest">
-              Organization
+          <div className="flex items-center gap-4 my-8">
+            <div className="flex-1 h-[1px] bg-slate-800"></div>
+            <span className="text-slate-600 text-[9px] uppercase tracking-[0.3em]">
+              Portal
             </span>
-            <div className="flex-1 h-px bg-slate-800"></div>
+            <div className="flex-1 h-[1px] bg-slate-800"></div>
           </div>
 
-          {/* Admin Button */}
           <Link
             href="/admin/auth"
-            className="w-full flex items-center justify-center py-3 border border-slate-700 text-slate-400 hover:text-orange-400 hover:border-orange-500 rounded-2xl transition-all uppercase text-xs tracking-widest"
+            className="w-full flex items-center justify-center py-3 border border-slate-800 text-slate-400 hover:text-orange-400 hover:border-orange-500/50 rounded-xl transition-all uppercase text-[10px] tracking-[0.2em] font-medium"
           >
             Admin Login
           </Link>
         </div>
 
-        {/* Footer */}
-        <p className="text-center mt-10 text-slate-600 text-xs">
-          Secure • Institutional • Encrypted
-        </p>
+        {/* Footer info */}
+        <div className="mt-8 flex justify-center gap-6">
+          <span className="text-slate-500 text-[10px] uppercase tracking-widest">
+            Secure
+          </span>
+          <span className="text-slate-500 text-[10px] uppercase tracking-widest">
+            Institutional
+          </span>
+        </div>
       </div>
     </div>
   );
