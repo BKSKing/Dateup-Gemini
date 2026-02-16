@@ -17,6 +17,10 @@ export default function AdminUpload() {
   const [groups, setGroups] = useState<Group[]>([]);
   const [bulkGroups, setBulkGroups] = useState([{ name: "", id: "" }]);
   const [file, setFile] = useState<File | null>(null);
+
+  // Naya State: Group List ko toggle karne ke liye
+  const [showManage, setShowManage] = useState(false);
+
   const [formData, setFormData] = useState({
     title: "",
     content: "",
@@ -63,7 +67,7 @@ export default function AdminUpload() {
       }));
 
     if (newGroups.length === 0)
-      return alert("Pehle Group ka naam aur ID bharo bhai!");
+      return alert("Pehle Group ka naam aur ID bharo!");
 
     const { error } = await supabase.from("groups").insert(newGroups);
 
@@ -72,11 +76,11 @@ export default function AdminUpload() {
       setBulkGroups([{ name: "", id: "" }]);
       fetchMyGroups();
     } else {
-      alert("Error: ID matching ya duplicate ho sakti hai: " + error.message);
+      alert("Error: ID duplicate ho sakti hai: " + error.message);
     }
   };
 
-  // 3. Delete Logic (Fixed Quote Error)
+  // 3. Delete Logic
   const deleteGroup = async (groupId: string) => {
     if (
       confirm(
@@ -117,8 +121,6 @@ export default function AdminUpload() {
         alert("Notice Published Successfully!");
         setFormData({ ...formData, title: "", content: "" });
         setFile(null);
-      } else {
-        alert("API Error: Notice post nahi hua.");
       }
     } catch (err) {
       alert("System Error: Upload fail ho gaya.");
@@ -197,10 +199,8 @@ export default function AdminUpload() {
                 onChange={(e) => setFile(e.target.files?.[0] || null)}
                 className="absolute inset-0 opacity-0 cursor-pointer"
               />
-              <span className="text-xs text-zinc-400 font-medium">
-                {file
-                  ? `✅ ${file.name.substring(0, 15)}...`
-                  : "📷 Attach Image"}
+              <span className="text-xs text-zinc-400 font-medium text-center px-2">
+                {file ? `✅ ${file.name.substring(0, 15)}` : "📷 Attach Image"}
               </span>
             </div>
           </div>
@@ -223,7 +223,7 @@ export default function AdminUpload() {
           <button
             type="button"
             onClick={() => setBulkGroups([...bulkGroups, { name: "", id: "" }])}
-            className="text-blue-500 text-xs font-bold bg-blue-500/10 px-3 py-1 rounded-full hover:bg-blue-500/20"
+            className="text-blue-500 text-xs font-bold bg-blue-500/10 px-3 py-1 rounded-full hover:bg-blue-500/20 transition"
           >
             + Add Another Row
           </button>
@@ -233,8 +233,8 @@ export default function AdminUpload() {
           {bulkGroups.map((group, index) => (
             <div key={index} className="flex gap-2">
               <input
-                placeholder="Group Name (e.g. Class 10)"
-                className="flex-1 bg-zinc-900 border border-zinc-800 p-3 rounded-xl text-sm text-white outline-none focus:border-zinc-600"
+                placeholder="Group Name (Class 10)"
+                className="flex-1 bg-zinc-900 border border-zinc-800 p-3 rounded-xl text-sm text-white outline-none focus:border-zinc-600 transition"
                 value={group.name}
                 onChange={(e) => {
                   const newArr = [...bulkGroups];
@@ -243,8 +243,8 @@ export default function AdminUpload() {
                 }}
               />
               <input
-                placeholder="ID (e.g. C10-XYZ)"
-                className="w-1/3 bg-zinc-900 border border-zinc-800 p-3 rounded-xl text-sm uppercase text-white outline-none focus:border-zinc-600"
+                placeholder="ID (C10-XYZ)"
+                className="w-1/3 bg-zinc-900 border border-zinc-800 p-3 rounded-xl text-sm uppercase text-white outline-none focus:border-zinc-600 transition"
                 value={group.id}
                 onChange={(e) => {
                   const newArr = [...bulkGroups];
@@ -263,60 +263,77 @@ export default function AdminUpload() {
         </div>
       </div>
 
-      {/* SECTION 3: GROUP IDS & MANAGEMENT */}
-      <div className="bg-zinc-950 border border-zinc-800 rounded-2xl p-6 border-t-4 border-t-red-600">
-        <h4 className="text-sm font-bold text-zinc-500 mb-4 uppercase tracking-tighter">
-          Group Access Control
-        </h4>
-        <div className="overflow-x-auto border border-zinc-900 rounded-xl">
-          <table className="w-full text-left border-collapse">
-            <thead className="bg-zinc-900 text-zinc-400 text-[10px] uppercase font-black">
-              <tr>
-                <th className="p-4">Group Name</th>
-                <th className="p-4 text-center">Viewer Access ID</th>
-                <th className="p-4 text-right">Delete</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-zinc-900">
-              {groups.length === 0 && (
-                <tr>
-                  <td
-                    colSpan={3}
-                    className="p-10 text-center text-zinc-600 italic text-sm"
-                  >
-                    No groups found. Create one above!
-                  </td>
-                </tr>
-              )}
-              {groups.map((g) => (
-                <tr
-                  key={g.id}
-                  className="hover:bg-zinc-900/30 transition group"
-                >
-                  <td className="p-4 text-white font-medium">{g.group_name}</td>
-                  <td className="p-4 text-center">
-                    <span className="bg-blue-500/10 text-blue-400 px-3 py-1 rounded-md font-mono text-sm border border-blue-500/20">
-                      {g.access_id}
-                    </span>
-                  </td>
-                  <td className="p-4 text-right">
-                    <button
-                      onClick={() => deleteGroup(g.id)}
-                      className="text-zinc-600 hover:text-red-500 p-2 transition-all hover:scale-125"
-                      title="Delete Group"
+      {/* SECTION 3: TOGGLEABLE GROUP IDS & MANAGEMENT */}
+      <div className="bg-zinc-950 border border-zinc-800 rounded-2xl p-4 border-t-4 border-t-red-600 transition-all">
+        {/* The Toggle Button */}
+        <button
+          onClick={() => setShowManage(!showManage)}
+          className="w-full flex justify-between items-center py-2 px-2 text-zinc-400 hover:text-white transition group"
+        >
+          <span className="text-sm font-bold uppercase tracking-tighter flex items-center gap-2">
+            {showManage ? "📂 Close Management" : "📁 View & Manage All Groups"}
+          </span>
+          <span className="text-xl font-mono group-hover:scale-125 transition-transform">
+            {showManage ? "−" : "+"}
+          </span>
+        </button>
+
+        {/* Expandable Content */}
+        {showManage && (
+          <div className="mt-6 space-y-4 animate-in fade-in slide-in-from-top-2">
+            <div className="overflow-x-auto border border-zinc-900 rounded-xl">
+              <table className="w-full text-left border-collapse">
+                <thead className="bg-zinc-900 text-zinc-400 text-[10px] uppercase font-black">
+                  <tr>
+                    <th className="p-4">Group Name</th>
+                    <th className="p-4 text-center">Viewer Access ID</th>
+                    <th className="p-4 text-right">Delete</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-zinc-900">
+                  {groups.length === 0 && (
+                    <tr>
+                      <td
+                        colSpan={3}
+                        className="p-10 text-center text-zinc-600 italic text-sm"
+                      >
+                        No groups found. Create one above!
+                      </td>
+                    </tr>
+                  )}
+                  {groups.map((g) => (
+                    <tr
+                      key={g.id}
+                      className="hover:bg-zinc-900/30 transition group"
                     >
-                      🗑️
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <p className="mt-4 text-[10px] text-zinc-600 italic text-center">
-          * Share the "Access ID" with viewers so they can login to see this
-          specific group's feed.
-        </p>
+                      <td className="p-4 text-white font-medium">
+                        {g.group_name}
+                      </td>
+                      <td className="p-4 text-center">
+                        <span className="bg-blue-500/10 text-blue-400 px-3 py-1 rounded-md font-mono text-sm border border-blue-500/20 shadow-sm">
+                          {g.access_id}
+                        </span>
+                      </td>
+                      <td className="p-4 text-right">
+                        <button
+                          onClick={() => deleteGroup(g.id)}
+                          className="text-zinc-600 hover:text-red-500 p-2 transition-all hover:rotate-12"
+                        >
+                          🗑️
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <p className="text-[10px] text-zinc-600 italic text-center px-4">
+              * Note: Share the **Access ID** with your students/viewers so they
+              can join their respective notice feeds.
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
