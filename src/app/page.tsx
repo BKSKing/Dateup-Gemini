@@ -40,7 +40,6 @@ export default function ViewerLogin() {
   };
 
   return (
-    // Rule 3: Background Always Page Container Pe
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-[#0a0f1f] to-[#ff7a00] px-6">
       <div className="relative w-full max-w-md">
         {/* Branding */}
@@ -54,14 +53,14 @@ export default function ViewerLogin() {
           </p>
         </div>
 
-        {/* Rule 4: Card Polish Tailwind Se */}
+        {/* Card */}
         <div className="bg-[#0f172a]/90 backdrop-blur-xl border border-orange-500/20 p-10 rounded-3xl shadow-2xl">
           <form onSubmit={handleJoin} className="space-y-8">
-            {/* Rule 5: Input Proper Polish */}
             <div>
               <label className="block text-[10px] text-slate-400 uppercase tracking-[0.2em] mb-3 ml-1">
                 Student Access ID
               </label>
+
               <input
                 type="text"
                 placeholder="ENTER ACCESS ID"
@@ -82,11 +81,11 @@ export default function ViewerLogin() {
 
           {/* Divider */}
           <div className="flex items-center gap-4 my-8">
-            <div className="flex-1 h-[1px] bg-slate-800"></div>
+            <div className="flex-1 h-px bg-slate-800"></div>
             <span className="text-slate-600 text-[9px] uppercase tracking-[0.3em]">
               Portal
             </span>
-            <div className="flex-1 h-[1px] bg-slate-800"></div>
+            <div className="flex-1 h-px bg-slate-800"></div>
           </div>
 
           <Link
@@ -97,7 +96,7 @@ export default function ViewerLogin() {
           </Link>
         </div>
 
-        {/* Footer info */}
+        {/* Footer */}
         <div className="mt-8 flex justify-center gap-6">
           <span className="text-slate-500 text-[10px] uppercase tracking-widest">
             Secure
