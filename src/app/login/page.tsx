@@ -93,7 +93,7 @@ export default function ViewerLogin() {
 
           {/* ORG/ADMIN LOGIN REDIRECT */}
           <Link
-            href="/admin/login"
+            href="/admin/create"
             className="w-full py-3 flex items-center justify-center gap-2 bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-2xl transition-all text-xs font-bold"
           >
             <span>🛡️</span> Organization Login
