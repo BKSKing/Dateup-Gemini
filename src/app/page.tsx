@@ -41,67 +41,71 @@ export default function ViewerLogin() {
   };
 
   return (
-    // Background: Deep Navy Slate
-    <div className="min-h-screen flex items-center justify-center bg-[#020617] px-6 relative">
-      {/* Subtle Professional Ambient Light */}
-      <div className="absolute top-0 left-1/4 w-[400px] h-[400px] bg-blue-900/10 blur-[120px] rounded-full"></div>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#020617] via-[#0B1120] to-black px-6 relative overflow-hidden">
+      {/* Orange Glow Effect */}
+      <div className="absolute -top-32 -right-32 w-[400px] h-[400px] bg-orange-600/20 blur-[140px] rounded-full"></div>
+      <div className="absolute bottom-0 left-0 w-[350px] h-[350px] bg-blue-900/20 blur-[120px] rounded-full"></div>
 
-      <div className="relative w-full max-w-[400px]">
-        {/* BRANDING: Bold, Straight, Clean */}
-        <div className="text-center mb-10">
-          <h1 className="text-5xl font-bold text-white tracking-tight mb-2">
-            DATE<span className="text-orange-500">UP</span>
+      <div className="relative w-full max-w-md">
+        {/* Branding */}
+        <div className="text-center mb-12">
+          <h1 className="text-6xl font-extrabold tracking-tight">
+            <span className="text-white">DATE</span>
+            <span className="text-orange-500">UP</span>
           </h1>
-          <p className="text-slate-500 text-[11px] font-semibold uppercase tracking-[0.3em]">
-            Digital Notice Board System
+          <p className="text-slate-400 text-xs uppercase tracking-[0.4em] mt-2">
+            Smart Digital Notice System
           </p>
         </div>
 
-        {/* MAIN CARD: Solid Professional Feel */}
-        <div className="bg-[#0F172A] border border-slate-800/60 p-8 rounded-2xl shadow-2xl">
-          <form onSubmit={handleJoin} className="space-y-6">
-            <div className="space-y-3">
-              <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">
-                Student Access Portal
+        {/* Glass Card */}
+        <div className="bg-[#0F172A]/80 backdrop-blur-xl border border-slate-800 p-10 rounded-3xl shadow-[0_0_40px_rgba(255,115,0,0.15)]">
+          <form onSubmit={handleJoin} className="space-y-8">
+            {/* Input Section */}
+            <div>
+              <label className="block text-xs text-slate-400 uppercase tracking-widest mb-3">
+                Student Access ID
               </label>
               <input
                 type="text"
-                placeholder="Enter Access ID"
-                className="w-full bg-[#1E293B] border border-slate-700 p-4 rounded-xl text-white font-medium text-lg uppercase tracking-wider outline-none focus:ring-1 focus:ring-orange-500 focus:border-orange-500 transition-all placeholder:text-slate-600"
+                placeholder="ENTER ACCESS ID"
                 value={accessId}
                 onChange={(e) => setAccessId(e.target.value)}
                 required
+                className="w-full bg-black border border-slate-700 p-4 rounded-2xl text-white text-lg tracking-widest uppercase outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/30 transition-all"
               />
             </div>
 
+            {/* Button */}
             <button
               disabled={loading}
-              className="w-full py-4 bg-orange-600 text-white font-bold rounded-xl hover:bg-orange-500 transition-all active:scale-[0.98] shadow-lg shadow-orange-950/20 uppercase text-sm tracking-widest"
+              className="w-full py-4 bg-orange-600 hover:bg-orange-500 text-black font-bold rounded-2xl transition-all duration-300 active:scale-95 shadow-lg shadow-orange-900/30 uppercase tracking-wider"
             >
-              {loading ? "Verifying..." : "View Notices"}
+              {loading ? "Verifying..." : "Access Notices"}
             </button>
           </form>
 
           {/* Divider */}
-          <div className="flex items-center gap-4 my-8">
-            <div className="h-[1px] flex-1 bg-slate-800"></div>
-            <span className="text-[9px] font-bold text-slate-600 uppercase tracking-tighter">
-              Admin Area
+          <div className="flex items-center gap-4 my-10">
+            <div className="flex-1 h-px bg-slate-800"></div>
+            <span className="text-slate-600 text-[10px] uppercase tracking-widest">
+              Organization
             </span>
-            <div className="h-[1px] flex-1 bg-slate-800"></div>
+            <div className="flex-1 h-px bg-slate-800"></div>
           </div>
 
+          {/* Admin Button */}
           <Link
             href="/admin/auth"
-            className="w-full py-3 flex items-center justify-center gap-2 bg-slate-900/50 border border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition-all text-[11px] font-bold uppercase tracking-wide"
+            className="w-full flex items-center justify-center py-3 border border-slate-700 text-slate-400 hover:text-orange-400 hover:border-orange-500 rounded-2xl transition-all uppercase text-xs tracking-widest"
           >
-            Organization Login
+            Admin Login
           </Link>
         </div>
 
         {/* Footer */}
-        <p className="text-center mt-8 text-slate-700 text-[10px] font-medium">
-          Secure Institutional Access • © 2026 DateUp
+        <p className="text-center mt-10 text-slate-600 text-xs">
+          Secure • Institutional • Encrypted
         </p>
       </div>
     </div>
