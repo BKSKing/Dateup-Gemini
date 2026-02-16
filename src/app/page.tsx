@@ -1,5 +1,6 @@
 "use client";
 
+import "./globals.css";
 import { useState } from "react";
 import { createBrowserClient } from "@supabase/ssr";
 import { useRouter } from "next/navigation";
@@ -28,7 +29,7 @@ export default function ViewerLogin() {
         .single();
 
       if (error || !data) {
-        alert("Invalid Access ID. Please check with your admin.");
+        alert("Invalid Access ID. Please verify with your department.");
       } else {
         router.push(`/feed/${accessId.toUpperCase()}`);
       }
@@ -40,32 +41,33 @@ export default function ViewerLogin() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#050505] px-6 relative overflow-hidden">
-      <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-10 [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-600/10 blur-[120px] rounded-full"></div>
+    // Background: Deep Navy Slate
+    <div className="min-h-screen flex items-center justify-center bg-[#020617] px-6 relative">
+      {/* Subtle Professional Ambient Light */}
+      <div className="absolute top-0 left-1/4 w-[400px] h-[400px] bg-blue-900/10 blur-[120px] rounded-full"></div>
 
-      <div className="relative w-full max-w-[420px] animate-in fade-in zoom-in duration-700">
-        {/* BRANDING */}
-        <div className="text-center mb-12">
-          <h1 className="text-7xl font-black text-white tracking-tighter italic mb-3">
-            DATE<span className="text-blue-600">UP</span>
+      <div className="relative w-full max-w-[400px]">
+        {/* BRANDING: Bold, Straight, Clean */}
+        <div className="text-center mb-10">
+          <h1 className="text-5xl font-bold text-white tracking-tight mb-2">
+            DATE<span className="text-orange-500">UP</span>
           </h1>
-          <p className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.4em] opacity-80">
+          <p className="text-slate-500 text-[11px] font-semibold uppercase tracking-[0.3em]">
             Digital Notice Board System
           </p>
         </div>
 
-        {/* MAIN CARD */}
-        <div className="bg-zinc-950/40 backdrop-blur-2xl border border-zinc-800/50 p-10 rounded-[3rem] shadow-3xl">
-          <form onSubmit={handleJoin} className="space-y-8">
-            <div className="space-y-4 text-center">
-              <span className="text-[10px] font-black uppercase text-blue-500 tracking-[0.2em] bg-blue-500/10 px-3 py-1 rounded-full">
-                Student Portal
-              </span>
+        {/* MAIN CARD: Solid Professional Feel */}
+        <div className="bg-[#0F172A] border border-slate-800/60 p-8 rounded-2xl shadow-2xl">
+          <form onSubmit={handleJoin} className="space-y-6">
+            <div className="space-y-3">
+              <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">
+                Student Access Portal
+              </label>
               <input
                 type="text"
-                placeholder="ENTER ACCESS ID"
-                className="w-full bg-zinc-900/40 border border-zinc-800/80 p-6 rounded-3xl text-white text-center font-mono text-xl uppercase tracking-[0.2em] outline-none focus:ring-2 focus:ring-blue-600/40 focus:border-blue-600/40 transition-all placeholder:text-zinc-800"
+                placeholder="Enter Access ID"
+                className="w-full bg-[#1E293B] border border-slate-700 p-4 rounded-xl text-white font-medium text-lg uppercase tracking-wider outline-none focus:ring-1 focus:ring-orange-500 focus:border-orange-500 transition-all placeholder:text-slate-600"
                 value={accessId}
                 onChange={(e) => setAccessId(e.target.value)}
                 required
@@ -74,28 +76,33 @@ export default function ViewerLogin() {
 
             <button
               disabled={loading}
-              className="w-full py-5 bg-white text-black font-black rounded-3xl hover:bg-zinc-200 transition-all active:scale-95 shadow-[0_20px_40px_rgba(255,255,255,0.1)]"
+              className="w-full py-4 bg-orange-600 text-white font-bold rounded-xl hover:bg-orange-500 transition-all active:scale-[0.98] shadow-lg shadow-orange-950/20 uppercase text-sm tracking-widest"
             >
-              {loading ? "VERIFYING..." : "VIEW NOTICES"}
+              {loading ? "Verifying..." : "View Notices"}
             </button>
           </form>
 
-          <div className="flex items-center gap-4 my-10">
-            <div className="h-[1px] flex-1 bg-zinc-900"></div>
-            <span className="text-[9px] font-black text-zinc-700 uppercase tracking-widest">
-              Control Center
+          {/* Divider */}
+          <div className="flex items-center gap-4 my-8">
+            <div className="h-[1px] flex-1 bg-slate-800"></div>
+            <span className="text-[9px] font-bold text-slate-600 uppercase tracking-tighter">
+              Admin Area
             </span>
-            <div className="h-[1px] flex-1 bg-zinc-900"></div>
+            <div className="h-[1px] flex-1 bg-slate-800"></div>
           </div>
 
-          {/* FIX: Direct path to our custom Auth Page */}
           <Link
             href="/admin/auth"
-            className="group w-full py-4 flex items-center justify-center gap-3 bg-zinc-900/50 border border-zinc-800/50 text-zinc-500 hover:text-white hover:border-zinc-700 rounded-3xl transition-all text-xs font-black uppercase tracking-widest"
+            className="w-full py-3 flex items-center justify-center gap-2 bg-slate-900/50 border border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition-all text-[11px] font-bold uppercase tracking-wide"
           >
-            🛡️ Organization Login
+            Organization Login
           </Link>
         </div>
+
+        {/* Footer */}
+        <p className="text-center mt-8 text-slate-700 text-[10px] font-medium">
+          Secure Institutional Access • © 2026 DateUp
+        </p>
       </div>
     </div>
   );
