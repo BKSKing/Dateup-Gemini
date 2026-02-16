@@ -22,7 +22,7 @@ export default function LoginPage() {
       password,
     });
     if (error) alert(error.message);
-    else router.push("/admin/dashboard");
+    else router.push("/admin/create");
   };
 
   return (
