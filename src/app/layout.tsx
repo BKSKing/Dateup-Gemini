@@ -1,3 +1,4 @@
+import "./globals.css";
 import OneSignalInit from "./OneSignalInit";
 
 export const metadata = {
