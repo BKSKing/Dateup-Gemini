@@ -3,14 +3,13 @@
 import { useState } from "react";
 import { createBrowserClient } from "@supabase/ssr";
 import { useRouter } from "next/navigation";
+import Link from "next/link"; // Navigation ke liye Link add kiya
 
 export default function ViewerLogin() {
   const [accessId, setAccessId] = useState("");
   const [loading, setLoading] = useState(false);
-
   const router = useRouter();
 
-  // Supabase Client Initialization
   const supabase = createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -19,16 +18,11 @@ export default function ViewerLogin() {
   const handleJoin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!accessId.trim()) return;
-
     setLoading(true);
 
-    // Note: Agar aap Access ID se hi auth karna chahte hain,
-    // toh aapko Supabase mein common password ya custom function use karna hoga.
-    // Filhal ye check kar raha hai ki ID valid format mein hai ya nahi.
     try {
-      // Logic for Supabase check (Example: Checking if a group exists with this ID)
       const { data, error } = await supabase
-        .from("groups") // 'groups' table check kar rahe hain
+        .from("groups")
         .select("*")
         .eq("access_id", accessId.toUpperCase())
         .single();
@@ -47,22 +41,22 @@ export default function ViewerLogin() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#050505] px-6 relative overflow-hidden">
-      {/* Premium Background Grid Effect */}
+      {/* Background Effects */}
       <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))] opacity-20"></div>
-
-      {/* Decorative Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-blue-600/10 blur-[120px] rounded-full"></div>
 
       <div className="relative w-full max-w-[400px] animate-in fade-in slide-in-from-bottom-4 duration-1000">
+        {/* LOGO SECTION */}
         <div className="text-center mb-10">
           <h1 className="text-6xl font-black text-white tracking-tighter italic mb-2">
             DATE<span className="text-blue-600">UP</span>
           </h1>
-          <p className="text-zinc-500 text-xs font-bold uppercase tracking-[0.3em]">
+          <p className="text-zinc-500 text-[10px] font-bold uppercase tracking-[0.3em]">
             Premium Viewer Portal
           </p>
         </div>
 
+        {/* LOGIN CARD */}
         <div className="bg-zinc-950/50 backdrop-blur-xl border border-zinc-800/50 p-8 rounded-[2.5rem] shadow-2xl">
           <form onSubmit={handleJoin} className="space-y-6">
             <div className="space-y-3">
@@ -81,11 +75,29 @@ export default function ViewerLogin() {
 
             <button
               disabled={loading}
-              className="w-full py-4 bg-white text-black font-black rounded-2xl hover:bg-zinc-200 transition-all active:scale-95 shadow-[0_0_40px_rgba(255,255,255,0.15)] disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-4 bg-white text-black font-black rounded-2xl hover:bg-zinc-200 transition-all active:scale-95 shadow-[0_0_40px_rgba(255,255,255,0.15)] disabled:opacity-50"
             >
               {loading ? "VERIFYING..." : "ENTER PORTAL"}
             </button>
           </form>
+
+          {/* HR LINE SEPARATOR */}
+          <div className="relative my-8">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t border-zinc-800"></span>
+            </div>
+            <div className="relative flex justify-center text-[10px] uppercase font-bold text-zinc-600">
+              <span className="bg-[#0b0b0b] px-2">Admin Only</span>
+            </div>
+          </div>
+
+          {/* ORG/ADMIN LOGIN REDIRECT */}
+          <Link
+            href="/admin/login"
+            className="w-full py-3 flex items-center justify-center gap-2 bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white hover:bg-zinc-800 rounded-2xl transition-all text-xs font-bold"
+          >
+            <span>🛡️</span> Organization Login
+          </Link>
         </div>
 
         <p className="text-center mt-8 text-zinc-600 text-[10px] font-medium tracking-wide uppercase">
