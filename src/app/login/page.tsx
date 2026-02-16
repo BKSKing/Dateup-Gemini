@@ -30,7 +30,6 @@ export default function ViewerLogin() {
       if (error || !data) {
         alert("Invalid Access ID. Please check with your admin.");
       } else {
-        // Viewer ko seedha unke group feed pe bhejo
         router.push(`/feed/${accessId.toUpperCase()}`);
       }
     } catch (err) {
@@ -42,7 +41,6 @@ export default function ViewerLogin() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#050505] px-6 relative overflow-hidden">
-      {/* Premium Background Visuals */}
       <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-10 [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-600/10 blur-[120px] rounded-full"></div>
 
@@ -59,7 +57,6 @@ export default function ViewerLogin() {
 
         {/* MAIN CARD */}
         <div className="bg-zinc-950/40 backdrop-blur-2xl border border-zinc-800/50 p-10 rounded-[3rem] shadow-3xl">
-          {/* VIEWER FORM */}
           <form onSubmit={handleJoin} className="space-y-8">
             <div className="space-y-4 text-center">
               <span className="text-[10px] font-black uppercase text-blue-500 tracking-[0.2em] bg-blue-500/10 px-3 py-1 rounded-full">
@@ -68,7 +65,7 @@ export default function ViewerLogin() {
               <input
                 type="text"
                 placeholder="ENTER ACCESS ID"
-                className="w-full bg-zinc-900/40 border border-zinc-800/80 p-6 rounded-3xl text-white text-center font-mono text-xl uppercase tracking-[0.2em] outline-none focus:ring-2 focus:ring-blue-600/40 focus:border-blue-600/40 transition-all placeholder:text-zinc-800 placeholder:font-sans placeholder:tracking-normal"
+                className="w-full bg-zinc-900/40 border border-zinc-800/80 p-6 rounded-3xl text-white text-center font-mono text-xl uppercase tracking-[0.2em] outline-none focus:ring-2 focus:ring-blue-600/40 focus:border-blue-600/40 transition-all placeholder:text-zinc-800"
                 value={accessId}
                 onChange={(e) => setAccessId(e.target.value)}
                 required
@@ -77,38 +74,28 @@ export default function ViewerLogin() {
 
             <button
               disabled={loading}
-              className="w-full py-5 bg-white text-black font-black rounded-3xl hover:bg-zinc-200 transition-all active:scale-95 shadow-[0_20px_40px_rgba(255,255,255,0.1)] disabled:opacity-50"
+              className="w-full py-5 bg-white text-black font-black rounded-3xl hover:bg-zinc-200 transition-all active:scale-95 shadow-[0_20px_40px_rgba(255,255,255,0.1)]"
             >
               {loading ? "VERIFYING..." : "VIEW NOTICES"}
             </button>
           </form>
 
-          {/* CLEAN DIVIDER */}
           <div className="flex items-center gap-4 my-10">
             <div className="h-[1px] flex-1 bg-zinc-900"></div>
-            <span className="text-[9px] font-black text-zinc-700 uppercase tracking-widest italic">
-              Management
+            <span className="text-[9px] font-black text-zinc-700 uppercase tracking-widest">
+              Control Center
             </span>
             <div className="h-[1px] flex-1 bg-zinc-900"></div>
           </div>
 
-          {/* ADMIN/ORG REDIRECT BUTTON */}
+          {/* FIX: Direct path to our custom Auth Page */}
           <Link
             href="/admin/auth"
             className="group w-full py-4 flex items-center justify-center gap-3 bg-zinc-900/50 border border-zinc-800/50 text-zinc-500 hover:text-white hover:border-zinc-700 rounded-3xl transition-all text-xs font-black uppercase tracking-widest"
           >
-            <span className="group-hover:scale-110 transition-transform">
-              🛡️
-            </span>
-            Organization Login
+            🛡️ Organization Login
           </Link>
         </div>
-
-        <footer className="text-center mt-12">
-          <p className="text-zinc-700 text-[10px] font-bold uppercase tracking-widest">
-            Institutional Grade Broadcasting
-          </p>
-        </footer>
       </div>
     </div>
   );
